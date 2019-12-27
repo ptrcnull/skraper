@@ -8,3 +8,14 @@ type UserData struct {
 	Language      string `json:"language"`
 	CreatePrivate bool   `json:"createPrivate"`
 }
+
+type WordsEvent struct {
+	Id int `json:"int"`
+	Words []string `json:"words"`
+}
+
+type Chans struct {
+	Word chan string
+	Key chan string
+	NewWord chan string
+}
