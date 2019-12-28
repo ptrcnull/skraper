@@ -55,6 +55,8 @@ func client(wg *sync.WaitGroup, e *Chans, port int, workerID int, key string) {
 		})
 	})
 
+	var myID int
+
 	_ = c.On("lobbyConnected", func(c *gosocketio.Channel, iargs interface{}) {
 		args, ok := iargs.(map[string]interface{})
 		if !ok {
@@ -62,7 +64,8 @@ func client(wg *sync.WaitGroup, e *Chans, port int, workerID int, key string) {
 			prt(iargs)
 			return
 		}
-		prt("Connected. Key: ", args["key"], ", ID: ", args["id"])
+		prt("Connected. Key: ", args["key"], ", ID: ", args["myID"])
+		myID = args["myID"].(int)
 		e.Key<-args["key"].(string)
 	})
 
@@ -86,10 +89,10 @@ func client(wg *sync.WaitGroup, e *Chans, port int, workerID int, key string) {
 	_ = c.On("lobbyChooseWord", func(c *gosocketio.Channel, ev WordsEvent) {
 		prt("O KURWA MAM SŁOWA")
 		prt(ev)
-		//if (ev.Id == 0 && key != "") || (ev.Id == 1 && key == "") {
-		//	prt(ev.Words)
-		//	emit("lobbyChooseWord", 0)
-		//}
+		if ev.Id == myID {
+			prt(ev.Words)
+			emit("lobbyChooseWord", 0)
+		}
 	})
 
 	_ = c.On(gosocketio.OnDisconnection, func(c *gosocketio.Channel) {
