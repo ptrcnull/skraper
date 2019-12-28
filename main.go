@@ -55,7 +55,7 @@ func client(wg *sync.WaitGroup, e *Chans, port int, workerID int, key string) {
 		})
 	})
 
-	var myID int
+	var myID float64
 
 	_ = c.On("lobbyConnected", func(c *gosocketio.Channel, iargs interface{}) {
 		args, ok := iargs.(map[string]interface{})
@@ -65,7 +65,7 @@ func client(wg *sync.WaitGroup, e *Chans, port int, workerID int, key string) {
 			return
 		}
 		prt("Connected. Key: ", args["key"], ", ID: ", args["myID"])
-		myID = args["myID"].(int)
+		myID = args["myID"].(float64)
 		e.Key<-args["key"].(string)
 	})
 
