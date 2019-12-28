@@ -90,7 +90,7 @@ func client(wg *sync.WaitGroup, e *Chans, port int, workerID int, key string) {
 		prt("O KURWA MAM SŁOWA")
 		prt(ev)
 		if ev.Id == myID {
-			prt(ev.Words)
+			prt(fmt.Sprintf("%v == %v: %v", ev.Id, myID, ev.Words))
 			emit("lobbyChooseWord", 0)
 		}
 	})
