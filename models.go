@@ -10,7 +10,7 @@ type UserData struct {
 }
 
 type WordsEvent struct {
-	Id int `json:"int"`
+	Id float64 `json:"int"`
 	Words []string `json:"words"`
 }
 
