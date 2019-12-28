@@ -89,8 +89,8 @@ func client(wg *sync.WaitGroup, e *Chans, port int, workerID int, key string) {
 	_ = c.On("lobbyChooseWord", func(c *gosocketio.Channel, ev WordsEvent) {
 		prt("O KURWA MAM SŁOWA")
 		prt(ev)
-		if ev.Id == myID {
-			prt(fmt.Sprintf("%v == %v: %v", ev.Id, myID, ev.Words))
+		if len(ev.Words) != 0 {
+			prt(fmt.Sprintf("%v == %v: %v (%v)", ev.Id, myID, ev.Words, len(ev.Words)))
 			emit("lobbyChooseWord", 0)
 		}
 	})
